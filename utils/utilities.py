@@ -15,7 +15,7 @@ def read_data(data_path, split = "train"):
 
 	# Paths
 	path_ = os.path.join(data_path, split)
-	path_signals = os.path.join(path_, "Inertial_Signals")
+	path_signals = os.path.join(path_, "Inertial Signals")
 
 	# Read labels and one-hot encode
 	label_path = os.path.join(path_, "y_" + split + ".txt")
@@ -34,7 +34,7 @@ def read_data(data_path, split = "train"):
 	for fil_ch in channel_files:
 		channel_name = fil_ch[:-posix]
 		dat_ = pd.read_csv(os.path.join(path_signals,fil_ch), delim_whitespace = True, header = None)
-		X[:,:,i_ch] = dat_.as_matrix()
+		X[:,:,i_ch] = dat_.to_numpy()
 
 		# Record names
 		list_of_channels.append(channel_name)
@@ -43,7 +43,7 @@ def read_data(data_path, split = "train"):
 		i_ch += 1
 
 	# Return 
-	return X, labels[0].values, list_of_channels
+	return np.transpose(X, axes=[0, 2, 1]), labels[0].values, list_of_channels
 
 def standardize(train, test):
 	""" Standardize data """
